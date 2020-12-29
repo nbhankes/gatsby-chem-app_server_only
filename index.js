@@ -5,10 +5,6 @@ const mongoose = require("mongoose")
 require("dotenv").config()
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const passport = require("passport")
-const authenticate = require("./authenticate")
-const User = require("./user")
-const graphqlHTTP = require("express-graphql")
 const { ApolloServer } = require("apollo-server-express")
 
 const MONGODB_URI = `${process.env.REACT_APP_MONGODB_URI}`
@@ -45,22 +41,13 @@ app.use(bodyParser.json())
 app.use("*", cors())
 server.applyMiddleware({ app })
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(passport.initialize())
-
-app.use(
-  "/graphql",
-  authenticate.verifyUser,
-  graphqlHTTP({
-    schema,
-    rootValue: schema,
-    graphiql: false,
-  })
-)
+app.get("/", function (req, res) {
+  res.write("Hello World.")
+  res.end()
+})
 
 const port = process.env.PORT || 4000
 
 app.listen(port, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
 )
