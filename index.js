@@ -59,7 +59,9 @@ app.use(
   })
 )
 
-app.get('/', (req, res) => { res.send('Hello from Express!')
+app.get("/", (req, res) => {
+  res.send("Hello from Express!")
+})
 
 const port = process.env.PORT || 4000
 
